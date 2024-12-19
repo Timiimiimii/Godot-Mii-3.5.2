@@ -1,0 +1,13 @@
+{
+  "partsInfo": {
+    "compressLevel": 3,
+    "memoryLevel": 7,
+    "strategy": 0,
+    "windowBits": 5
+  },
+  "texture": {
+    "filename": "Eye_56.png",
+    "format": "RGBA",
+    "numMips": 6
+  }
+}

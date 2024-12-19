@@ -1,0 +1,118 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://mods/Timimimi.Mii/Assets/Node/Test/MiiRenderTest.gd" type="Script" id=1]
+[ext_resource path="res://mods/Timimimi.Mii/Assets/Mii/node/mii_head_plus.tscn" type="PackedScene" id=2]
+[ext_resource path="res://mods/Timimimi.Mii/Assets/Material/mii_epichair.gdshader" type="Shader" id=3]
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath(".")
+
+[sub_resource type="ViewportTexture" id=2]
+viewport_path = NodePath("TexSet/Mask")
+
+[sub_resource type="SpatialMaterial" id=3]
+resource_local_to_scene = true
+flags_transparent = true
+albedo_color = Color( 1, 0, 0.654902, 1 )
+albedo_texture = SubResource( 2 )
+roughness = 0.8
+rim_enabled = true
+rim = 0.3
+rim_tint = 0.6
+
+[sub_resource type="ViewportTexture" id=4]
+viewport_path = NodePath("TexSet/Faceline")
+
+[sub_resource type="SpatialMaterial" id=5]
+resource_local_to_scene = true
+flags_albedo_tex_force_srgb = true
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.98
+albedo_texture = SubResource( 4 )
+metallic_specular = 0.16
+uv1_scale = Vector3( 0.5, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = ExtResource( 3 )
+shader_param/albedo = Color( 0.768627, 0.101961, 0.101961, 1 )
+shader_param/specular = null
+shader_param/metallic = null
+shader_param/alpha_scissor_threshold = null
+shader_param/roughness = 1.0
+shader_param/point_size = null
+shader_param/uv1_scale = null
+shader_param/uv1_offset = null
+shader_param/uv2_scale = null
+shader_param/uv2_offset = null
+
+[sub_resource type="ViewportTexture" id=7]
+viewport_path = NodePath("TexSet/Faceline")
+
+[sub_resource type="ViewportTexture" id=8]
+viewport_path = NodePath("TexSet/Mouth")
+
+[node name="Viewport" type="Viewport"]
+size = Vector2( 1000, 1000 )
+transparent_bg = true
+hdr = false
+render_target_update_mode = 3
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+texture = SubResource( 1 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+visible = false
+texture = SubResource( 1 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 34.5, 600 )
+current = true
+near = 500.0
+far = 700.0
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="player_face" parent="." instance=ExtResource( 2 )]
+transform = Transform( 60, 0, 0, 0, 60, 0, 0, 0, 60, 0, 0, 0 )
+
+[node name="Mesh2" parent="player_face/HeadSet/FacelineMaskSet/Mask_0" index="0"]
+material/0 = SubResource( 3 )
+
+[node name="Mesh2" parent="player_face/HeadSet/FacelineMaskSet/Faceline_0" index="0"]
+material/0 = SubResource( 5 )
+
+[node name="Mesh2" parent="player_face/HeadSet/HairSet/Hair1_33" index="0"]
+material/0 = SubResource( 6 )
+
+[node name="Sprite" parent="player_face" index="3"]
+texture = SubResource( 7 )
+
+[node name="blush" parent="player_face" index="5"]
+transform = Transform( 0.380002, 0, 0, 0, 0.375193, 0.0602641, 0, -0.0602641, 0.375193, 0, -0.0549876, 0.540315 )
+
+[node name="Mouth" parent="player_face" index="6"]
+texture = SubResource( 8 )
+
+[node name="eye_l" parent="player_face" index="8"]
+transform = Transform( 0.609117, -0.0322298, 0.491721, -0.0108882, 0.780738, 0.0646611, -0.492656, -0.0571039, 0.606532, 0.232, 0.035, 0.397 )
+
+[node name="eye_r" parent="player_face" index="9"]
+transform = Transform( 0.607603, 0.049173, -0.491416, -0.0108815, 0.780253, 0.0646209, 0.49375, -0.0433162, 0.606155, -0.232, 0.035, 0.397 )
+
+[node name="mouth_l" parent="player_face" index="10"]
+transform = Transform( 0.454958, -4.01176e-06, 0.197079, 0.0637976, 0.469115, -0.147268, -0.186467, 0.160493, 0.430463, 0.145649, -0.268702, 0.447898 )
+
+[node name="mouth_r" parent="player_face" index="11"]
+transform = Transform( 0.454959, -3.06607e-07, -0.197077, -0.0637942, 0.469114, -0.147272, 0.186466, 0.160495, 0.430463, -0.145302, -0.268313, 0.447989 )
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[editable path="player_face"]
+[editable path="player_face/HeadSet/Glass_0"]
+[editable path="player_face/HeadSet/FacelineMaskSet/Mask_0"]
+[editable path="player_face/HeadSet/FacelineMaskSet/Faceline_0"]
+[editable path="player_face/HeadSet/HairSet/Hair1_33"]

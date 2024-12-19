@@ -1,0 +1,33 @@
+GDRE Tools v0.7.3
+Windows 10.0.22631, NVIDIA GeForce RTX 3050 Ti Laptop GPU, opengl3
+Extracted 10 files, no errors detected!
+Script version 3.5.2 (rev 0xa7aad78) detected
+Saved project config project.godot.
+Saved project config project.godot.
+
+
+********************************EXPORT REPORT********************************
+
+Totals:                                 
+Decompiled scripts:                     4
+Failed scripts:                         0
+Imported resources for export session:  10
+Successfully converted:                 0
+Lossy:                                  0
+Rewrote metadata:                       0
+Non-importable conversions:             0
+Not converted:                          0
+Failed conversions:                     0
+-------------
+
+
+
+------------------------------------------------------------------------------------
+
+Use Godot editor version 3.5.2 to edit the project.
+Note: the project may be using a custom version of Godot. Detection for this has not been implemented yet.
+If you find that you have many non-import errors upon opening the project 
+(i.e. scripts or shaders have many errors), use the original game's binary as the export template.
+
+*******************************************************************************
+

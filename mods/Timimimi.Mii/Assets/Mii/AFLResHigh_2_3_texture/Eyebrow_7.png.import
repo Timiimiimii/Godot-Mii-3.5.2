@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/Eyebrow_7.png-b49797b1e08109f63186af639c6e341a.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://mods/Timimimi.Mii/Assets/Mii/AFLResHigh_2_3_texture/Eyebrow_7.png"
+dest_files=[ "res://.import/Eyebrow_7.png-b49797b1e08109f63186af639c6e341a.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=1
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

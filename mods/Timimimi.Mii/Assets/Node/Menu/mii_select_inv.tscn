@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Textures/UI/knot_sep.png" type="Texture" id=1]
+[ext_resource path="res://mods/Timimimi.Mii/main.gd" type="Script" id=2]
+[ext_resource path="res://mods/Timimimi.Mii/Assets/Mii/node/mii_headBroken.tscn" type="PackedScene" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="MiiSelect" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_right = 620.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 64 )
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 0.933333, 0.835294, 1 )
+text = "Mii                                                                             "
+valign = 1
+
+[node name="mii_cont" type="GridContainer" parent="."]
+margin_top = 68.0
+margin_right = 620.0
+margin_bottom = 68.0
+custom_constants/vseparation = 12
+custom_constants/hseparation = 12
+columns = 6
+
+[node name="HSeparator2" type="HSeparator" parent="."]
+margin_top = 72.0
+margin_right = 620.0
+margin_bottom = 88.0
+custom_constants/separation = 16
+custom_styles/separator = SubResource( 1 )
+
+[node name="sep2" type="TextureRect" parent="."]
+margin_top = 92.0
+margin_right = 620.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 0, 32 )
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 4
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 300, 300 )
+transparent_bg = true
+
+[node name="player_face" parent="Viewport" instance=ExtResource( 3 )]
+
+[node name="Camera" type="Camera" parent="Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.512751, 2.28148 )
+projection = 1
+size = 1.5
+
+[connection signal="ready" from="mii_cont" to="." method="_on_mii_cont_ready"]
