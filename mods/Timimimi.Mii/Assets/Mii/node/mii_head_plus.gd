@@ -218,6 +218,8 @@ func _GenerateMii():
 	MiiGenerated = true
 	if CharData == null:
 		pass
+	elif _Amiimal_Check() == true:
+		_Amiimal_Features(CharData)
 func _MakeHair():
 	var HairPath = str(ShapePath+"Hair1_"+str(HairID)+".glb")
 	var HairMat = preload("res://mods/Timimimi.Mii/Assets/Material/Mii_EpicalHair.material")
@@ -311,7 +313,7 @@ func _MakeHead():
 	var FacelineTex = str(TexPath+"Faceline_"+str(FacelineID)+".png")
 	var BeardTex = str(TexPath+"Beard_"+str(BeardID)+".png")
 	var SkinModel = $TexSet/Faceline/Base/SkinTone
-	#var FurTex = $TexSet/Faceline/Amiimal/Fur
+	var FurTex = $TexSet/Faceline/Amiimal/Fur
 	if ResourceLoader.exists(MakeTex):
 		$TexSet/Faceline/FaceMake/FaceMake.texture = load(MakeTex)
 	if ResourceLoader.exists(BeardTex):
@@ -321,7 +323,7 @@ func _MakeHead():
 	if ResourceLoader.exists(FacelineTex):
 		$TexSet/Faceline/Faceline/Faceline.texture = load(FacelineTex)
 		_setHeadColour()
-	#FurTex.visible = false
+	FurTex.visible = false
 	SkinModel.color = SkinColour
 	
 	var node = $HeadSet/FacelineMaskSet
@@ -360,12 +362,13 @@ func _MakeHead():
 		MaskInstance.get_child(0).get_surface_material(0).flags_transparent = true
 		MaskInstance.get_child(0).get_surface_material(0).params_use_alpha_scissor = true
 		MaskInstance.get_child(0).get_surface_material(0).albedo_color = Color("ffffff")
+		MaskInstance.get_child(0).get_surface_material(0).params_cull_mode = SpatialMaterial.CULL_BACK
 		
 		
 		
 func _AssignGlass():
 	var Glass = $HeadSet/Glass_0
-	var GlassMat = load(str(MaterialPath+"Mii_Hair.material"))
+	var GlassMat = load(str(MaterialPath+"Mii_Glass.material"))
 	var GlassCalc =(GlassVert -11) * -1.5 + 5.0
 	#var GlassCalc = 0.4547142856 - (GlassVert * 0.01428571428)
 	var GlassCalc2 = (0.34 + (GlassSize*0.16))
@@ -389,6 +392,7 @@ func _AssignGlass():
 	Glass.get_child(0).get_surface_material(0).params_use_alpha_scissor = false
 	Glass.get_child(0).get_surface_material(0).albedo_texture = load(str(TexPath+"Glass_"+str(GlassID)+".png"))
 	Glass.get_child(0).get_surface_material(0).flags_transparent = true
+	Glass.get_child(0).get_surface_material(0).params_cull_mode = SpatialMaterial.CULL_DISABLED
 	#Glass,get_child(0).get_surface_material(0).flags_albedo_tex_force_srgb = false
 	
 
@@ -632,7 +636,7 @@ func _AssignNose():
 		LineInstance.get_child(0).get_surface_material(0).albedo_color = Color("000000")
 		LineInstance.get_child(0).get_surface_material(0).params_use_alpha_scissor = true
 		LineInstance.get_child(0).set_surface_material(0, LineInstance.get_child(0).get_surface_material(0).duplicate())
-		
+		LineInstance.get_child(0).get_surface_material(0).params_cull_mode = SpatialMaterial.CULL_BACK
 	if ResourceLoader.exists(NoseLoad):
 		var NoseInstance = load(NoseLoad).instance()
 		node.add_child(NoseInstance)
@@ -645,7 +649,7 @@ func _AssignNose():
 		NoseInstance.get_child(0).get_surface_material(0).albedo_color = Color("ffffff")
 		NoseInstance.get_child(0).get_surface_material(0).params_use_alpha_scissor = false
 		NoseInstance.get_child(0).set_surface_material(0, NoseInstance.get_child(0).get_surface_material(0).duplicate())
-		
+		NoseInstance.get_child(0).get_surface_material(0).params_cull_mode = SpatialMaterial.CULL_BACK
 
 func _NosePosition():
 	var NoseSet = $HeadSet/NoseSet
@@ -676,7 +680,7 @@ func _AssignMouth():
 	var MouthTex = str(TexPath+"Mouth_"+str(MouthID)+".png")
 	if ResourceLoader.exists(MouthTex):
 		MouthSprite.texture = load(MouthTex)
-	#	$TexSet/Mouth/MouthSprite.texture = load(MouthTex)
+		$TexSet/Mouth/MouthSprite.texture = load(MouthTex)
 	else:
 		pass
 
@@ -694,7 +698,7 @@ func _MouthPosition():
 
 func _MouthColour():
 	var MouthSprite = $TexSet/Mask/Offset/MouthSprite
-	#var AmiiMouthSprite = $TexSet/Mouth/MouthSprite
+	var AmiiMouthSprite = $TexSet/Mouth/MouthSprite
 	_setMiiCmnColour('MouthLower')
 	_setMiiUpperLipColour()
 #	MouthSprite.material.set_shader_parameter("MouthLower", MouthCLower)
@@ -710,6 +714,11 @@ func _MouthColour():
 	MouthSprite.material.set_shader_param("B_Replace", Color("ffffff"))
 	MouthSprite.material.set_shader_param("R_Replace", MouthCLower)
 	MouthSprite.material.set_shader_param("G_Replace", MouthCUpper)
+	AmiiMouthSprite.material = ShaderMaterial.new()
+	AmiiMouthSprite.material.shader = MouthShader
+	AmiiMouthSprite.material.set_shader_param("B_Replace", Color("ffffff"))
+	AmiiMouthSprite.material.set_shader_param("R_Replace", MouthCLower)
+	AmiiMouthSprite.material.set_shader_param("G_Replace", MouthCUpper)
 
 
 
@@ -1110,6 +1119,8 @@ onready var blink_texture = preload("res://mods/Timimimi.Mii/Assets/Mii/AFLResHi
 func _physics_process(delta):
 	if MiiFaceAnimation == true:
 		MiiFaceAnimate()
+	if Engine.get_idle_frames() % 10 == 0:
+		_MiiToneBody()
 	if reset_time > 0:
 		reset_time -= 1
 		if reset_time <= 0:
@@ -1163,7 +1174,29 @@ func _update_mouth():
 	$TexSet/Mouth/MouthSprite.texture = mouth
 	#$mouth_r.texture = mouth
 
+func _setup_face(data):
+	match data["species"]:
+		"species_cat":
+			#$AnimationPlayer.play("cat_face")
+			species = "species_cat"
+		"species_dog":
+			#$AnimationPlayer.play("dog_face")
+			species = "species_dog"
+	#CharData = data
+	if data["nose"] != "":
+		var nose = Globals.cosmetic_data[data["nose"]]["file"]
+		$Nose.texture = nose.icon
+	if _Amiimal_Check() == true:
+		#_Amiimal_Features(data)
+		pass
+	if _Amiimal_Check() == false:
+		_MiiToneBody()
 
+func _MiiToneBody():
+	if _Amiimal_Check() == false and PlayerNode != null:
+		PlayerNode.body_mesh.material_override.set_shader_param("albedo", SkinColour)
+		PlayerNode.body_mesh.material_override.set_shader_param("albedo_secondary", SkinColour)
+	return "Yahoo"
 
 func _on_blink_timer_timeout():
 	if canBlink == true:
@@ -1306,5 +1339,122 @@ func _talk():
 	reset_time = 15
 	_update_mouth()
 
+func _show_blush(show):
+	$TexSet/Faceline/FaceMake/Blush.visible = show
 	
-
+func AMIIMAL_SECTION():
+	pass
+	
+func _Amiimal_Check() -> bool:
+	if SnoutHeight == 0:
+		#$TexSet/Faceline/Amiimal.visible = false
+		return false
+	else:
+		#$TexSet/Faceline/Amiimal.visible = true
+		return true
+		
+func _Amiimal_Features(data):
+	var DataMain = PlayerNode.cosmetic_data
+	var EarSet = $HeadSet/EarSet
+	var BodyMat = preload("res://Assets/Shaders/player_skins.tres")
+	var MiiMat = preload("res://mods/Timimimi.Mii/Assets/Mii/AmiimalModel/kemo01_m_003.material")
+	var CatEar = preload("res://mods/Timimimi.Mii/Assets/Mii/AmiimalModel/kmFaceCatEar.glb")
+	var CatSnout = preload("res://mods/Timimimi.Mii/Assets/Mii/AmiimalModel/kmFaceCatSnout.glb")
+	var CatNose = preload("res://mods/Timimimi.Mii/Assets/Mii/AmiimalModel/kmFaceCatNose.glb")
+	var CatEarInstance = CatEar.instance()
+	var CatSnoutInstance = CatSnout.instance()
+	var CatNoseInstance = CatNose.instance()
+	var CatEarTex = preload("res://mods/Timimimi.Mii/Assets/Mii/AmiimalTex/cat_ear.png")
+	var CatTex = preload("res://mods/Timimimi.Mii/Assets/Mii/AmiimalTex/cat_facePaint.png")
+	var WolEar = preload("res://mods/Timimimi.Mii/Assets/Mii/AmiimalModel/kmFaceWolEar.glb")
+	var WolSnout = preload("res://mods/Timimimi.Mii/Assets/Mii/AmiimalModel/kmFaceWolSnout.glb")
+	var WolTex = preload("res://mods/Timimimi.Mii/Assets/Mii/AmiimalTex/wolf_facePaint.png")
+	var WolEarInstance = WolEar.instance()
+	var WolSnoutInstance = WolSnout.instance()
+	var FurTex = $TexSet/Faceline/Amiimal/Fur
+	var MainFurTex = $TexSet/Faceline/Amiimal/SkinToneOverride
+	var NoseSet = $HeadSet/NoseSet
+	var SnoutSet = $HeadSet/SnoutSet
+	var Mouth = $TexSet/Mask/Offset/MouthSprite
+	var MouthBone = $TexSet/Mask/Offset/MouthSprite
+	var AmiimalFaceSet = $TexSet/Faceline/Amiimal
+	var MiiFacePattern = str("res://mods/Timimimi.Mii/Assets/Mii/AmiimalTex/mii_"+str(DataMain.species)+"_"+str(DataMain.pattern)+".png")
+	var pattern = Globals.cosmetic_data[DataMain["pattern"]]["file"]
+	#CatEarInstance.material_override.set_shader_param("texture_albedo", pattern.body_pattern[0])
+	var primary_color = Globals.cosmetic_data[DataMain["primary_color"]]["file"]
+	var secondary_color = Globals.cosmetic_data[DataMain["secondary_color"]]["file"] if pattern.body_pattern[0] else Globals.cosmetic_data[DataMain["primary_color"]]["file"]
+	for n in EarSet.get_children():
+			EarSet.remove_child(n)
+			n.queue_free()
+	for n in SnoutSet.get_children():
+			SnoutSet.remove_child(n)
+			n.queue_free()
+	FurTex.visible = false
+	species = DataMain.species
+	$Mouth.rotation_degrees = Vector3(0,0,0)
+	AmiimalFaceSet.visible = true
+	if ForeMeshNode != null:
+		#ForeMeshNode.get_surface_material(0).albedo_color = secondary_color.main_color
+		ForeMeshNode.get_surface_material(0).albedo_color = Color('ffffff')
+		pass
+	match species:
+		"species_cat":
+			#CatEar.material
+			$Nose.visible = true
+			$Mouth.visible = false
+			$Nose.translation = Vector3(0,0.274,0.48)
+			FurTex.texture = CatTex
+			EarSet.add_child(CatEarInstance)
+			SnoutSet.add_child(CatSnoutInstance)
+			#SnoutSet.add_child(CatNoseInstance)
+			if ResourceLoader.exists(MiiFacePattern) == true:
+				FurTex.texture = load(MiiFacePattern)
+				FurTex.visible = true
+			pass #print#("Pattern:"+ str(pattern.body_pattern[1]))
+			CatEarInstance.get_child(0).set_surface_material(0,BodyMat)
+			CatEarInstance.get_child(0).set_surface_material(0, CatEarInstance.get_child(0).get_surface_material(0).duplicate())
+			CatEarInstance.get_child(0).get_surface_material(0).set_shader_param("texture_albedo", pattern.body_pattern[1])
+			CatEarInstance.get_child(0).get_surface_material(0).set_shader_param("albedo", primary_color.main_color)
+			CatEarInstance.get_child(0).get_surface_material(0).set_shader_param("albedo_secondary", secondary_color.main_color)
+			CatSnoutInstance.get_child(0).set_surface_material(0,BodyMat)
+			CatSnoutInstance.get_child(0).set_surface_material(0, CatSnoutInstance.get_child(0).get_surface_material(0).duplicate())
+			CatSnoutInstance.get_child(0).get_surface_material(0).set_shader_param("texture_albedo", pattern.body_pattern[1])
+			CatSnoutInstance.get_child(0).get_surface_material(0).set_shader_param("albedo", primary_color.main_color)
+			CatSnoutInstance.get_child(0).get_surface_material(0).set_shader_param("albedo_secondary", secondary_color.main_color)
+			#CatNoseInstance.get_child(0).set_surface_material(0,MiiMat)
+			#CatNoseInstance.get_child(0).set_surface_material(0, CatNoseInstance.get_child(0).get_surface_material(0).duplicate())
+			
+			MainFurTex.color = secondary_color.main_color
+			FurTex.modulate =  primary_color.main_color
+			HairMeshNode.get_surface_material(0).set_shader_param("albedo",secondary_color.main_color + Color(0.1,0.1,0.1))
+			NoseSet.visible = false
+			Mouth.visible = false
+		"species_dog":
+			$Nose.visible = true
+			$Mouth.visible = true
+			$Mouth.scale = Vector3(MouthBone.scale.x*0.191,MouthBone.scale.y*0.191,1)
+			$Mouth.translation = Vector3(0,0.165,0.71)
+			$Nose.translation = Vector3(0,0.27,0.74)
+			$Mouth.rotation_degrees = Vector3(11,0,0)
+			FurTex.texture = WolTex
+			EarSet.add_child(WolEarInstance)
+			SnoutSet.add_child(WolSnoutInstance)
+			if ResourceLoader.exists(MiiFacePattern) == true:
+				FurTex.texture = load(MiiFacePattern)
+				FurTex.visible = true
+			WolEarInstance.get_child(0).set_surface_material(0,BodyMat)
+			WolEarInstance.get_child(0).set_surface_material(0, WolEarInstance.get_child(0).get_surface_material(0).duplicate())
+			WolEarInstance.get_child(0).get_surface_material(0).set_shader_param("texture_albedo", pattern.body_pattern[2])
+			WolEarInstance.get_child(0).get_surface_material(0).set_shader_param("albedo", primary_color.main_color)
+			WolEarInstance.get_child(0).get_surface_material(0).set_shader_param("albedo_secondary", secondary_color.main_color)
+			WolSnoutInstance.get_child(0).set_surface_material(0,BodyMat)
+			WolSnoutInstance.get_child(0).set_surface_material(0, WolSnoutInstance.get_child(0).get_surface_material(0).duplicate())
+			WolSnoutInstance.get_child(0).get_surface_material(0).set_shader_param("texture_albedo", pattern.body_pattern[2])
+			WolSnoutInstance.get_child(0).get_surface_material(0).set_shader_param("albedo", primary_color.main_color)
+			WolSnoutInstance.get_child(0).get_surface_material(0).set_shader_param("albedo_secondary", secondary_color.main_color)
+			#FurTex.visible = true
+			MainFurTex.color = secondary_color.main_color
+			FurTex.modulate =  primary_color.main_color
+			HairMeshNode.get_surface_material(0).set_shader_param("albedo",secondary_color.main_color + Color(0.1,0.1,0.1))
+			NoseSet.visible = false
+			Mouth.visible = false
