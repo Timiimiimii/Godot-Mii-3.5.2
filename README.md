@@ -1,5 +1,6 @@
 # GodotMii3.5.2
  Mii Heads recreated in Godot 3.5.2 for use in games.
+ If you use this, please give credit.
  Example Images below.
 ![Screenshot 2024-12-16 030756](https://github.com/user-attachments/assets/546e2168-b868-4453-903f-c2a9e431b27b)
 
