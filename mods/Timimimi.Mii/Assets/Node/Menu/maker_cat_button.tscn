@@ -1,18 +1,18 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Singletons/Tooltips/tooltip_node.gd" type="Script" id=1]
-[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatHead.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Textures/UI/badges8.png" type="Texture" id=3]
+[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatHead.png" type="Texture2D" id=2]
+[ext_resource path="res://Assets/Textures/UI/badges8.png" type="Texture2D" id=3]
 [ext_resource path="res://mods/Timimimi.Mii/Assets/Material/CmnLightenMat.material" type="Material" id=4]
 [ext_resource path="res://mods/Timimimi.Mii/Assets/Node/Menu/MakerCategoryButton.gd" type="Script" id=5]
-[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatCmn.png" type="Texture" id=6]
+[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatCmn.png" type="Texture2D" id=6]
 
 [node name="maker_cat_button" type="Control"]
 anchor_right = 0.071
 anchor_bottom = 0.121
-margin_right = -0.320007
-margin_bottom = 0.319992
-rect_min_size = Vector2( 136, 131 )
+offset_right = -0.320007
+offset_bottom = 0.319992
+custom_minimum_size = Vector2( 136, 131 )
 mouse_filter = 2
 script = ExtResource( 5 )
 y_offset = 30
@@ -22,15 +22,15 @@ visible = false
 modulate = Color( 1, 1, 1, 0.294118 )
 anchor_right = 1.035
 anchor_bottom = 1.0
-margin_top = 4.0
-margin_right = -4.75999
-margin_bottom = 65.0
+offset_top = 4.0
+offset_right = -4.75999
+offset_bottom = 65.0
 mouse_filter = 2
 texture = ExtResource( 3 )
 
 [node name="TextureButton" type="TextureButton" parent="."]
 anchor_right = 1.0
-margin_bottom = 61.0
+offset_bottom = 61.0
 texture_normal = ExtResource( 6 )
 
 [node name="TextureRect" type="TextureRect" parent="TextureButton"]
@@ -38,18 +38,18 @@ modulate = Color( 1, 1, 1, 0.588235 )
 material = ExtResource( 4 )
 anchor_right = 1.035
 anchor_bottom = 1.0
-margin_top = -3.0
-margin_right = -4.75999
-margin_bottom = -3.0
+offset_top = -3.0
+offset_right = -4.75999
+offset_bottom = -3.0
 mouse_filter = 2
 texture = ExtResource( 6 )
 
 [node name="TextureRect2" type="TextureRect" parent="TextureButton"]
 anchor_right = 1.035
 anchor_bottom = 1.0
-margin_top = -3.0
-margin_right = -4.75999
-margin_bottom = -3.0
+offset_top = -3.0
+offset_right = -4.75999
+offset_bottom = -3.0
 mouse_filter = 2
 texture = ExtResource( 2 )
 

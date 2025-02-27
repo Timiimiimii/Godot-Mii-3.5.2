@@ -1,18 +1,18 @@
 extends Control
 #onready var MiiHead = get_node_or_null("Viewport/player_face")
 #var MiiPath
-export  var tab_num = 0
-export  var y_offset = 10
-export  var x_offset = 0
-export (Texture) var image
-export  var header = ""
-export  var desc = ""
-export var butType = "cat"
-export var MiiFile = "Mii"
+@export  var tab_num = 0
+@export  var y_offset = 10
+@export  var x_offset = 0
+@export var image: Texture2D
+@export  var header = ""
+@export  var desc = ""
+@export var butType = "cat"
+@export var MiiFile = "Mii"
 var hovered = false
 var highlighted = false
-export var feat = "Head"
-onready var shadow = $shadow
+@export var feat = "Head"
+@onready var shadow = $shadow
 var extra_x
 var extra_y
 signal _pressed
@@ -42,12 +42,12 @@ func _process(delta):
 	elif butType == "pos":
 		extra_y = 0 if not highlighted else - 8
 		extra_x=0
-	$TextureButton.rect_position.y = lerp($TextureButton.rect_position.y, y_offset + extra_y, 0.2)
-	$TextureButton.rect_position.x = lerp($TextureButton.rect_position.x, x_offset + extra_x, 0.2)
-	$TextureButton/TextureRect.rect_position.y = - 3
+	$TextureButton.position.y = lerp($TextureButton.position.y, y_offset + extra_y, 0.2)
+	$TextureButton.position.x = lerp($TextureButton.position.x, x_offset + extra_x, 0.2)
+	$TextureButton/TextureRect.position.y = - 3
 	
-	$TextureButton.margin_bottom = 61 + y_offset + extra_y
-	$TextureButton.margin_top = 0 + y_offset + extra_y
+	$TextureButton.offset_bottom = 61 + y_offset + extra_y
+	$TextureButton.offset_top = 0 + y_offset + extra_y
 
 func _update(current_slot):
 	if butType != "pos":
@@ -58,7 +58,7 @@ func _update(current_slot):
 	$TextureButton / TooltipNode.header = header
 	$TextureButton / TooltipNode.body = desc
 	$TextureButton/TextureRect2.texture = image
-	$shadow.rect_position.y = y_offset + 4
+	$shadow.position.y = y_offset + 4
 
 func _on_TextureButton_pressed():
 	#print("pressed")
@@ -79,9 +79,9 @@ func _on_TextureButton_mouse_exited(): hovered = false
 
 func _ready():
 	#MiiHead =  $Viewport/player_face
-	connect("mouse_entered", GlobalAudio, "_play_sound", ["swish"])
-	if has_signal("button_down"): connect("button_down", GlobalAudio, "_play_sound", ["button_down"])
-	if has_signal("button_up"): connect("button_up", GlobalAudio, "_play_sound", ["button_up"])
+	connect("mouse_entered", Callable(GlobalAudio, "_play_sound").bind("swish"))
+	if has_signal("button_down"): connect("button_down", Callable(GlobalAudio, "_play_sound").bind("button_down"))
+	if has_signal("button_up"): connect("button_up", Callable(GlobalAudio, "_play_sound").bind("button_up"))
 	#_UpdateMii(MiiPath)
 
 func _on_TextureButton_button_down():

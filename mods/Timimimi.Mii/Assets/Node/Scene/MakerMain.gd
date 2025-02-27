@@ -1,8 +1,8 @@
 extends Control
 var current_tab
-onready var buttons = $UIContainer/MakerHUD/Category/buttons
-onready var tabs = $UIContainer/MakerHUD/Category/tabs
-onready var minitabs = $UIContainer/MakerHUD/Category/minitab
+@onready var buttons = $UIContainer/MakerHUD/Category/buttons
+@onready var tabs = $UIContainer/MakerHUD/Category/tabs
+@onready var minitabs = $UIContainer/MakerHUD/Category/minitab
 var MiiCamRot = false
 var MiiCamRotating = false
 var MiiCamLarge = false
@@ -10,43 +10,43 @@ var prevMosPos
 var nextMosPos
 var Event
 var MosSpeed
-onready var MiiSkele = $ViewportContainer/Viewport/MiiScene/MiiGrp/MiiBody/Mii/Skeleton
-onready var MiiBody = $ViewportContainer/Viewport/MiiScene/MiiGrp/MiiBody
-onready var MiiCamera = $ViewportContainer/Viewport/MiiScene/MiiGrp/CameraBob
-onready var MiiFaceCamH = $ViewportContainer/Viewport/MiiScene/MiiGrp/CameraHori
-onready var MiiFaceCamV = $ViewportContainer/Viewport/MiiScene/MiiGrp/CameraHori/CameraVert
-onready var MiiFaceCam = $ViewportContainer/Viewport/MiiScene/MiiGrp/player_face/CameraHori/CameraVert/MiiFaceCam
+@onready var MiiSkele = $SubViewportContainer/SubViewport/MiiScene/MiiGrp/MiiBody/Mii/Skeleton3D
+@onready var MiiBody = $SubViewportContainer/SubViewport/MiiScene/MiiGrp/MiiBody
+@onready var MiiCamera = $SubViewportContainer/SubViewport/MiiScene/MiiGrp/CameraBob
+@onready var MiiFaceCamH = $SubViewportContainer/SubViewport/MiiScene/MiiGrp/CameraHori
+@onready var MiiFaceCamV = $SubViewportContainer/SubViewport/MiiScene/MiiGrp/CameraHori/CameraVert
+@onready var MiiFaceCam = $SubViewportContainer/SubViewport/MiiScene/MiiGrp/player_face/CameraHori/CameraVert/MiiFaceCam
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 var DefaultM = "res://mods/Timimimi.Mii/Assets/Mii/Charinfo/DefaultM.charinfo"
-onready var MiiHead = $ViewportContainer/Viewport/MiiScene/MiiGrp/MiiBody/Mii/Skeleton/BoneAttachment/player_face
+@onready var MiiHead = $SubViewportContainer/SubViewport/MiiScene/MiiGrp/MiiBody/Mii/Skeleton3D/BoneAttachment3D/player_face
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#MiiCamera.play("CameraBob")
 	_UpdateMiiBody()
 	MiiCamera.stop()
-	$ViewportContainer/Viewport/MiiScene/MiiGrp/MiiBody/AnimationPlayer.play("Wait")
-	MiiHead.canBlink = false
+	$SubViewportContainer/SubViewport/MiiScene/MiiGrp/MiiBody/AnimationPlayer.play("Wait")
+	#MiiHead.canBlink = false
 	MiiHead.MiiFileLoad(DefaultM)
 	_change_tab(0)
 	_change_tab_mini(0,"Faceline")
-	for child in buttons.get_children(): child.connect("_pressed",self,"_change_tab")
+	for child in buttons.get_children(): child.connect("_pressed", Callable(self, "_change_tab"))
 	for child in tabs.get_children(): 
 		for child2 in child.get_child(0).get_child(0).get_children():
-			child2.connect("_featUpdate",self,"_UpdateMii")
-			child2.connect("_featUpdate2",self,"_change_feat")
+			child2.connect("_featUpdate", Callable(self, "_UpdateMii"))
+			child2.connect("_featUpdate2", Callable(self, "_change_feat"))
 	for child in minitabs.get_children(): 
 		for child2 in child.get_children():
-			child2.connect("_Minipressed",self,"_change_tab_mini")
-			child2.connect("_featUpdate",self,"_UpdateMii")
-			child2.connect("_featUpdate2",self,"_change_feat")
+			child2.connect("_Minipressed", Callable(self, "_change_tab_mini"))
+			child2.connect("_featUpdate", Callable(self, "_UpdateMii"))
+			child2.connect("_featUpdate2", Callable(self, "_change_feat"))
 	for child in tabs.get_children(): 
 		for child2 in child.get_children():
 			for child3 in child2.get_child(0).get_children():
-				child3.connect("_featUpdate",self,"_UpdateMii")
-				child3.connect("_featUpdate2",self,"_change_feat")
+				child3.connect("_featUpdate", Callable(self, "_UpdateMii"))
+				child3.connect("_featUpdate2", Callable(self, "_change_feat"))
 #				else:
 #					for child5 in child3.get_children():
 #						child5.connect("_Minipressed",self,"_change_tab_mini")
@@ -55,7 +55,7 @@ func _ready():
 			#child2.connect("_featUpdate",self,"_UpdateMii")
 			#print(child3)
 			#child3.connect("_Minipressed",self,"_change_tab_mini")
-	get_tree().get_root().connect("size_changed", self, "_viewport_update")
+	get_tree().get_root().connect("size_changed", Callable(self, "_viewport_update"))
 	call_deferred("_viewport_update")
 	pass # Replace with function body.
 
@@ -65,7 +65,7 @@ func _process(delta):
 	_UpdateMiiBody()
 	if Event != null and not InputEventMouseButton:
 		prevMosPos = Event.get_relative()
-	var cam = $ViewportContainer/Viewport.get_camera()
+	var cam = $SubViewportContainer/SubViewport.get_camera_3d()
 	#shader_ignore_cam.transform = cam.transform
 	if Input.is_action_pressed("move_jump"):
 		MiiFaceCamH.rotation_degrees.y = lerp(MiiFaceCamH.rotation_degrees.y,0,0.2)
@@ -81,12 +81,12 @@ func _process(delta):
 		#$ViewportContainer/Viewport/MiiScene/MiiGrp/CameraHori/CameraVert/MiiFaceCam.current = true
 	else:
 		MiiCamRotating = false
-		MiiFaceCamH.rotation_degrees.x = lerp(MiiFaceCamH.rotation_degrees.x,0,1)
-		MiiFaceCamV.rotation_degrees.y = lerp(MiiFaceCamH.rotation_degrees.y,0,1)
+		MiiFaceCamH.rotation_degrees.x = lerp(MiiFaceCamH.rotation_degrees.x,0.0,1.0)
+		MiiFaceCamV.rotation_degrees.y = lerp(MiiFaceCamH.rotation_degrees.y,0.0,1.0)
 		#$ViewportContainer/Viewport/MiiScene/MiiGrp/LargeCam/MiiFullCam.current = true
 		#$ViewportContainer/Viewport/MiiScene/MiiGrp/CameraHori/CameraVert/MiiFaceCam.current = false
 func _viewport_update():
-	var window_size = OS.window_size
+	var window_size = get_window().size
 	#$ViewportContainer/Viewport.size = (window_size / Globals.pixelize_amount).ceil()
 	#print(window_size, " new ", $ViewportContainer/Viewport.size)
 
@@ -115,10 +115,10 @@ func _change_tab(new):
 
 				
 	for child in tabs.get_children():
-		child.visible = child.get_position_in_parent() == new
+		child.visible = child.get_index() == new
 	for child in minitabs.get_children():
-		child.visible = child.get_position_in_parent() == new
-#		if child.get_position_in_parent() == new: $"%bplabel".text = child.name
+		child.visible = child.get_index() == new
+#		if child.get_index() == new: $"%bplabel".text = child.name
 
 func _change_feat(new,feat):
 	#current_tab = new
@@ -135,8 +135,8 @@ func _change_feat(new,feat):
 					_UpdateFeatureBut(child3)
 				
 #	for child in tabs.get_children():
-#		child.visible = child.get_position_in_parent() == new
-#		if child.get_position_in_parent() == new: $"%bplabel".text = child.name
+#		child.visible = child.get_index() == new
+#		if child.get_index() == new: $"%bplabel".text = child.name
 
 func _change_tab_mini(new,feat):
 #	for child in tabs.get_children():
@@ -149,7 +149,7 @@ func _change_tab_mini(new,feat):
 			child2._update(new)
 	for child in tabs.get_children():
 		for child2 in child.get_children():
-			child2.visible = child2.get_position_in_parent() == new
+			child2.visible = child2.get_index() == new
 
 #	for child in $Faceline / tabs.get_children():
 #		child.visible = child.name == new
@@ -159,7 +159,7 @@ func _input(event):
 	Event = event
 	if event is InputEventMouseMotion:
 		prevMosPos = event.get_relative()
-		MosSpeed = event.get_speed()
+		MosSpeed = event.get_velocity()
 	if event is InputEventMouseButton and event.pressed == true:
 		if event.button_index == 1 :
 			
@@ -184,10 +184,10 @@ func _on_MiiCamArea_mouse_exited():
 	pass
 
 func _UpdateMiiBody():
-	MiiFaceCamH.translation.y = MiiHead.global_translation.y
-	MiiBody.get_child(0).get_child(0).get_child(1).get_surface_material(0).albedo_color = MiiHead.FavColour
-	MiiBody.get_child(0).get_child(0).get_child(3).get_surface_material(0).albedo_color = MiiHead.FavColour
-	MiiBody.get_child(0).get_child(0).get_child(2).get_surface_material(0).albedo_color = Color("40464e")
+	MiiFaceCamH.position.y = MiiHead.global_position.y
+	#MiiBody.get_child(0).get_child(0).get_child(1).get_surface_override_material(0).albedo_color = MiiHead.FavColour
+	#MiiBody.get_child(0).get_child(0).get_child(3).get_surface_override_material(0).albedo_color = MiiHead.FavColour
+	#MiiBody.get_child(0).get_child(0).get_child(2).get_surface_override_material(0).albedo_color = Color("40464e")
 	#MiiBody.get_child(0).get_surface_material(0).set_shader_param("G_Replace", MiiHead.SkinColour)
 	#CalcArmatureScaleTest(MiiSkele,MiiHead.MiiHeight,MiiHead.MiiWeight)
 #	var scale = Vector3(1,1,1)

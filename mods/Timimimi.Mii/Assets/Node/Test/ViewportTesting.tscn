@@ -1,99 +1,283 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=3 uid="uid://bain0ek8bg6tg"]
 
-[ext_resource path="res://mods/Timimimi.Mii/Assets/Node/Test/Viewport.tscn" type="PackedScene" id=1]
-[ext_resource path="res://mods/Timimimi.Mii/Assets/Material/mii_epichair.gdshader" type="Shader" id=2]
+[ext_resource type="PackedScene" uid="uid://c74x5olenbdmk" path="res://mods/Timimimi.Mii/Assets/Node/Test/Viewport.tscn" id="1"]
 
-[sub_resource type="ViewportTexture" id=2]
+[sub_resource type="ViewportTexture" id="2"]
 viewport_path = NodePath(".")
 
-[sub_resource type="ViewportTexture" id=3]
-viewport_path = NodePath("TexSet/Mask")
+[sub_resource type="Animation" id="18"]
+resource_name = "MiiAngry"
+length = 1.8
+step = 0.05
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"ToggleBoneAnimFace"
+}, {
+"args": [false],
+"method": &"ToggleBoneAnimFace"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TexSet/MiiAnimBone/EyeLEmotion:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 1.5, 1.75),
+"transitions": PackedFloat32Array(1, 1, 8.28211, 8.28211, 1),
+"update": 0,
+"values": [0.0, 15.0, -20.0, -20.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TexSet/MiiAnimBone/EyeREmotion:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 1.5, 1.75),
+"transitions": PackedFloat32Array(1, 1, 8.28211, 8.28211, 1),
+"update": 0,
+"values": [0.0, -15.0, 20.0, 20.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TexSet/MiiAnimBone/BrowLEmotion:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 1.5, 1.75),
+"transitions": PackedFloat32Array(1, 1, 8.28211, 8.28211, 1),
+"update": 0,
+"values": [0.0, 15.0, -20.0, -20.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TexSet/MiiAnimBone/BrowREmotion:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 1.5, 1.75),
+"transitions": PackedFloat32Array(1, 1, 8.28211, 8.28211, 1),
+"update": 0,
+"values": [0.0, -15.0, 20.0, 20.0, 0.0]
+}
 
-[sub_resource type="SpatialMaterial" id=4]
-resource_local_to_scene = true
-flags_transparent = true
-albedo_color = Color( 1, 0, 0.654902, 1 )
-albedo_texture = SubResource( 3 )
-roughness = 0.8
-rim_enabled = true
-rim = 0.3
-rim_tint = 0.6
+[sub_resource type="Animation" id="11"]
+resource_name = "MiiSad"
+length = 1.8
+step = 0.05
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"ToggleBoneAnimFace"
+}, {
+"args": [false],
+"method": &"ToggleBoneAnimFace"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TexSet/MiiAnimBone/EyeLEmotion:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 1.5, 1.75),
+"transitions": PackedFloat32Array(1, 1, 8.28211, 8.28211, 1),
+"update": 0,
+"values": [0.0, -15.0, 20.0, 20.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TexSet/MiiAnimBone/EyeREmotion:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 1.5, 1.75),
+"transitions": PackedFloat32Array(1, 1, 8.28211, 8.28211, 1),
+"update": 0,
+"values": [0.0, 15.0, -20.0, -20.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TexSet/MiiAnimBone/BrowLEmotion:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 1.5, 1.75),
+"transitions": PackedFloat32Array(1, 1, 8.28211, 8.28211, 1),
+"update": 0,
+"values": [0.0, -15.0, 20.0, 20.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TexSet/MiiAnimBone/BrowREmotion:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 1.5, 1.75),
+"transitions": PackedFloat32Array(1, 1, 8.28211, 8.28211, 1),
+"update": 0,
+"values": [0.0, 15.0, -20.0, -20.0, 0.0]
+}
 
-[sub_resource type="ViewportTexture" id=5]
+[sub_resource type="Animation" id="19"]
+resource_name = "MiiSurprise"
+length = 1.8
+step = 0.05
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"ToggleBoneAnimFace"
+}, {
+"args": [false],
+"method": &"ToggleBoneAnimFace"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TexSet/MiiAnimBone/BrowLEmotion:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 1.5, 1.75),
+"transitions": PackedFloat32Array(1, 1, 8.28211, 8.28211, 1),
+"update": 0,
+"values": [Vector2(17, -36), Vector2(17, -30), Vector2(17, -46), Vector2(17, -46), Vector2(17, -36)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TexSet/MiiAnimBone/BrowREmotion:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 1.5, 1.75),
+"transitions": PackedFloat32Array(1, 1, 8.28211, 8.28211, 1),
+"update": 0,
+"values": [Vector2(-17, -36), Vector2(-17, -30), Vector2(-17, -46), Vector2(-17, -46), Vector2(-17, -36)]
+}
+
+[sub_resource type="Animation" id="7"]
+length = 0.001
+
+[sub_resource type="Animation" id="8"]
+resource_name = "cat_face"
+
+[sub_resource type="Animation" id="9"]
+resource_name = "dog_face"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rufon"]
+_data = {
+"MiiAngry": SubResource("18"),
+"MiiSad": SubResource("11"),
+"MiiSurprise": SubResource("19"),
+"RESET": SubResource("7"),
+"cat_face": SubResource("8"),
+"dog_face": SubResource("9")
+}
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_432t7"]
 viewport_path = NodePath("TexSet/Faceline")
 
-[sub_resource type="SpatialMaterial" id=6]
-resource_local_to_scene = true
-flags_albedo_tex_force_srgb = true
-params_use_alpha_scissor = true
-params_alpha_scissor_threshold = 0.98
-albedo_texture = SubResource( 5 )
-metallic_specular = 0.16
-uv1_scale = Vector3( 0.5, 1, 1 )
+[sub_resource type="ViewportTexture" id="ViewportTexture_pymey"]
+viewport_path = NodePath("SubViewport")
 
-[sub_resource type="ShaderMaterial" id=7]
-resource_local_to_scene = true
-shader = ExtResource( 2 )
-shader_param/albedo = Color( 0.768627, 0.101961, 0.101961, 1 )
-shader_param/specular = null
-shader_param/metallic = null
-shader_param/alpha_scissor_threshold = null
-shader_param/roughness = 1.0
-shader_param/point_size = null
-shader_param/uv1_scale = null
-shader_param/uv1_offset = null
-shader_param/uv2_scale = null
-shader_param/uv2_offset = null
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6gnvp"]
 
-[sub_resource type="ViewportTexture" id=8]
-viewport_path = NodePath("TexSet/Faceline")
+[sub_resource type="Sky" id="Sky_a23hx"]
+sky_material = SubResource("ProceduralSkyMaterial_6gnvp")
 
-[sub_resource type="ViewportTexture" id=1]
-viewport_path = NodePath("Viewport")
+[sub_resource type="Environment" id="Environment_doao7"]
+background_mode = 2
+sky = SubResource("Sky_a23hx")
+volumetric_fog_density = 0.0
+adjustment_brightness = 1.23
+adjustment_saturation = 1.23
 
-[node name="Spatial" type="Spatial"]
+[node name="Node3D" type="Node3D"]
 
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.955726, 0.294257, 0, -0.294257, 0.955726, 0, 0, 0)
+light_energy = 3.0
+light_indirect_energy = 0.0
+sky_mode = 1
 
-[node name="Viewport" parent="." instance=ExtResource( 1 )]
+[node name="SubViewport" parent="." instance=ExtResource("1")]
+render_target_update_mode = 4
 
-[node name="Sprite" parent="Viewport" index="0"]
-texture = SubResource( 2 )
+[node name="Sprite2D" parent="SubViewport" index="0"]
+texture = SubResource("2")
 
-[node name="Sprite2" parent="Viewport" index="1"]
-texture = SubResource( 2 )
+[node name="Sprite2" parent="SubViewport" index="1"]
+texture = SubResource("2")
 
-[node name="Mesh2" parent="Viewport/player_face/HeadSet/FacelineMaskSet/Mask_0" index="0"]
-material/0 = SubResource( 4 )
+[node name="AnimationPlayer" parent="SubViewport/player_face" index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_rufon")
+}
 
-[node name="Mesh2" parent="Viewport/player_face/HeadSet/FacelineMaskSet/Faceline_0" index="0"]
-material/0 = SubResource( 6 )
-
-[node name="Mesh2" parent="Viewport/player_face/HeadSet/HairSet/Hair1_33" index="0"]
-material/0 = SubResource( 7 )
-
-[node name="FacelineTex" parent="Viewport/player_face" index="3"]
-texture = SubResource( 8 )
+[node name="FacelineTex" parent="SubViewport/player_face" index="3"]
+texture = SubResource("ViewportTexture_432t7")
 
 [node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 1000.0
-margin_top = 500.0
-margin_right = 1040.0
-margin_bottom = 540.0
+offset_left = 1000.0
+offset_top = 500.0
+offset_right = 1040.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Sprite" type="Sprite" parent="Control"]
-position = Vector2( -1000, -500 )
-scale = Vector2( 0.7, 0.7 )
-texture = SubResource( 1 )
-flip_v = true
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+position = Vector2(-1000, -500)
+scale = Vector2(0.7, 0.7)
+texture = SubResource("ViewportTexture_pymey")
 
-[editable path="Viewport"]
-[editable path="Viewport/player_face"]
-[editable path="Viewport/player_face/HeadSet/Glass_0"]
-[editable path="Viewport/player_face/HeadSet/FacelineMaskSet/Mask_0"]
-[editable path="Viewport/player_face/HeadSet/FacelineMaskSet/Faceline_0"]
-[editable path="Viewport/player_face/HeadSet/HairSet/Hair1_33"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_doao7")
+
+[editable path="SubViewport"]
+[editable path="SubViewport/player_face"]
+[editable path="SubViewport/player_face/HeadSet/Glass_0"]
+[editable path="SubViewport/player_face/HeadSet/FacelineMaskSet/Mask_0"]
+[editable path="SubViewport/player_face/HeadSet/FacelineMaskSet/Faceline_0"]
+[editable path="SubViewport/player_face/HeadSet/HairSet/Hair1_33"]

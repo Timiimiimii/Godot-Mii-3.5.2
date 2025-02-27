@@ -2,31 +2,31 @@
 
 [ext_resource path="res://Scenes/Singletons/Tooltips/tooltip_node.gd" type="Script" id=1]
 [ext_resource path="res://mods/Timimimi.Mii/Assets/Node/Misc/mii_maker_button.gd" type="Script" id=2]
-[ext_resource path="res://Assets/Themes/accid___.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/Themes/accid___.ttf" type="FontFile" id=3]
 [ext_resource path="res://Assets/Themes/button_tan_hover.tres" type="StyleBox" id=4]
 [ext_resource path="res://Assets/Themes/button_tan_normal.tres" type="StyleBox" id=5]
 [ext_resource path="res://Assets/Themes/button_tan_pressed.tres" type="StyleBox" id=6]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="FontFile" id=1]
 size = 34
 font_data = ExtResource( 3 )
 
 [node name="mii_maker" type="Button"]
-margin_top = 171.0
-margin_right = 384.0
-margin_bottom = 220.0
+offset_top = 171.0
+offset_right = 384.0
+offset_bottom = 220.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_colors/font_color_disabled = Color( 1, 0.933333, 0.835294, 1 )
-custom_colors/font_color_focus = Color( 0.415686, 0.266667, 0.12549, 1 )
-custom_colors/font_color = Color( 0.415686, 0.266667, 0.12549, 1 )
-custom_colors/font_color_hover = Color( 1, 0.933333, 0.835294, 1 )
-custom_colors/font_color_pressed = Color( 1, 0.933333, 0.835294, 1 )
-custom_fonts/font = SubResource( 1 )
-custom_styles/hover = ExtResource( 4 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/disabled = ExtResource( 6 )
-custom_styles/normal = ExtResource( 5 )
+theme_override_colors/font_disabled_color = Color( 1, 0.933333, 0.835294, 1 )
+theme_override_colors/font_focus_color = Color( 0.415686, 0.266667, 0.12549, 1 )
+theme_override_colors/font_color = Color( 0.415686, 0.266667, 0.12549, 1 )
+theme_override_colors/font_hover_color = Color( 1, 0.933333, 0.835294, 1 )
+theme_override_colors/font_pressed_color = Color( 1, 0.933333, 0.835294, 1 )
+theme_override_fonts/font = SubResource( 1 )
+theme_override_styles/hover = ExtResource( 4 )
+theme_override_styles/pressed = ExtResource( 6 )
+theme_override_styles/disabled = ExtResource( 6 )
+theme_override_styles/normal = ExtResource( 5 )
 text = "Mii Maker"
 script = ExtResource( 2 )
 

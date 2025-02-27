@@ -1,9 +1,9 @@
 shader_type canvas_item;
 
-uniform vec4 R_Replace : hint_color;
-uniform vec4 G_Replace :  hint_color;
-uniform vec4 B_Replace : hint_color;
-uniform vec4 Default :  hint_color;
+uniform vec4 R_Replace : source_color;
+uniform vec4 G_Replace :  source_color;
+uniform vec4 B_Replace : source_color;
+uniform vec4 Default :  source_color;
 uniform bool ReplaceCol = true;
 
 
@@ -24,7 +24,7 @@ void fragment() {
 		COLOR = vec4(rgb_out.r,rgb_out.g,rgb_out.b,rgba_in.g);
     }
 	else {
-		COLOR = rgba_in
+		COLOR = rgba_in;
 		}
     // Assign final color for the pixel, and preserve transparency
 }

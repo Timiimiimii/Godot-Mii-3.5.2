@@ -21,29 +21,29 @@ func init_player(player: Actor):
 	
 	if player.name == "player":
 		SpawnNPC()
-		CatHeadMesh = player.get_node("body/player_body/Armature/Skeleton/head_cat").mesh.get_faces()
-		DogHeadMesh = player.get_node("body/player_body/Armature/Skeleton/head_dog").mesh.get_faces()
+		CatHeadMesh = player.get_node("body/player_body/Armature/Skeleton3D/head_cat").mesh.get_faces()
+		DogHeadMesh = player.get_node("body/player_body/Armature/Skeleton3D/head_dog").mesh.get_faces()
 	print(PlayerAPI.get_player_name(player))
 	MiiHeadAssign(player)
 	return 
 func _ready():
 	
 	PlayerAPI = get_node_or_null("/root/BlueberryWolfiAPIs/PlayerAPI")
-	PlayerAPI.connect("_player_added", self, "init_player")
+	PlayerAPI.connect("_player_added", Callable(self, "init_player"))
 	GrabMiiFiles(CharinfoPathOther)
 	
 	
 func MiiHeadAssign(player: Actor):
 	var file = File.new()
 	#GrabMiiFiles(CharinfoPathOther)
-	var MiiInstance = MiiHead.instance()
+	var MiiInstance = MiiHead.instantiate()
 	var playerSteamID = PlayerAPI.get_player_steamid(player)
 	var playerSteamUsername = PlayerAPI.get_player_name(player)
 	var CharInfoRandNo = randi() % CharinfoArray.size()
 	var CharInfoSelectedNo
 	if player.name == "player":
-		player.get_node("body/player_body/Armature/Skeleton/face/player_face").queue_free()
-		player.get_node("body/player_body/Armature/Skeleton/face").add_child(MiiInstance)
+		player.get_node("body/player_body/Armature/Skeleton3D/face/player_face").queue_free()
+		player.get_node("body/player_body/Armature/Skeleton3D/face").add_child(MiiInstance)
 		player.face = MiiInstance.get_node(".")
 		MiiInstance.PlayerNode = player.get_node(".")
 		MiiInstance.CharData = player.cosmetic_data
@@ -54,10 +54,10 @@ func MiiHeadAssign(player: Actor):
 			MiiInstance._Amiimal_Features(null)
 		
 	elif player.name.begins_with("@player@") == true:
-		if CharinfoArray.empty() == false:
+		if CharinfoArray.is_empty() == false:
 			CharInfoSelectedNo = int(CharInfoRandNo)
-			player.get_node("body/player_body/Armature/Skeleton/face/player_face").queue_free()
-			player.get_node("body/player_body/Armature/Skeleton/face").add_child(MiiInstance)
+			player.get_node("body/player_body/Armature/Skeleton3D/face/player_face").queue_free()
+			player.get_node("body/player_body/Armature/Skeleton3D/face").add_child(MiiInstance)
 			player.face = MiiInstance.get_node(".")
 			MiiInstance.PlayerNode = player.get_node(".")
 			MiiInstance.CharData = player.cosmetic_data
@@ -79,8 +79,8 @@ func MiiHeadAssign(player: Actor):
 			MiiHeadAssign(player)
 func HideOGHead(player: Actor):
 	if player != null:
-		for n in player.get_node_or_null("body/player_body/Armature/Skeleton/").get_children():
-			if n is MeshInstance and n.mesh != null and player != null:
+		for n in player.get_node_or_null("body/player_body/Armature/Skeleton3D/").get_children():
+			if n is MeshInstance3D and n.mesh != null and player != null:
 				var MeshFace = n.mesh.get_faces()
 				if MeshFace == CatHeadMesh:
 					n.visible = false
@@ -109,13 +109,13 @@ func in_main_menu():
 	return current_scene_name == "main_menu" and current_scene_name != "loading_menu"
 	
 func get_player_node():
-	return get_tree().current_scene.get_node_or_null("Viewport/main/entities/player")
+	return get_tree().current_scene.get_node_or_null("SubViewport/main/entities/player")
 
 func GrabMiiFiles(path):
 
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	dir.open(path)
-	dir.list_dir_begin(true, false)
+	dir.list_dir_begin() # TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while true:
 		var file = dir.get_next()
 		if file == "":
@@ -124,14 +124,14 @@ func GrabMiiFiles(path):
 			CharinfoArray.append(file)
 			
 			CharinfoArray.erase("Player.charinfo")
-			if CharinfoArray.empty() == true:
+			if CharinfoArray.is_empty() == true:
 				GrabMiiFiles("res://mods/Timimimi.Mii/Assets/Mii/Charinfo")
 	return CharinfoArray
 
 
 func _process(delta):
 	if PlayerAPI.players and in_lobby() == true:
-		if Engine.get_idle_frames() % 10 == 0:
+		if Engine.get_process_frames() % 10 == 0:
 #			if test == false:
 #				SpawnNPC()
 #				test = true
@@ -156,7 +156,7 @@ func add_maker_button():
 	InjectedMiiButton = true
 	var MenuBox = get_tree().current_scene.get_node_or_null("VBoxContainer")
 	var MakerButton = load("res://mods/Timimimi.Mii/Assets/Node/Misc/mii_maker_button.tscn")
-	var ButtonInstance = MakerButton.instance()
+	var ButtonInstance = MakerButton.instantiate()
 	MenuBox.add_child(ButtonInstance)
 	
 func is_cosmetic_menu_active()->bool:
@@ -170,16 +170,16 @@ func spamDatCommand(player):
 	var MiiHead
 	if player != null:
 		if is_instance_valid(MiiHead):
-			MiiHead = player.get_node("body/player_body/Armature/Skeleton/face").get_child(0)
+			MiiHead = player.get_node("body/player_body/Armature/Skeleton3D/face").get_child(0)
 			if MiiHead.has_method("_MiiToneBody") == true:
 				MiiHead._MiiToneBody()
 		
 func ReplacePlayerMiiHead():
 	pass
 func SpawnNPC():
-	var NPCInstance = MiiNPC.instance()
-	entities = get_tree().current_scene.get_node("Viewport/main/entities")
+	var NPCInstance = MiiNPC.instantiate()
+	entities = get_tree().current_scene.get_node("SubViewport/main/entities")
 	entities.add_child(NPCInstance)
-	NPCInstance.translation = NPCPos
+	NPCInstance.position = NPCPos
 	NPCInstance.get_child(0).get_child(1).play("Wait")
 	NPCInstance.rotation_degrees = Vector3(0,0,0)

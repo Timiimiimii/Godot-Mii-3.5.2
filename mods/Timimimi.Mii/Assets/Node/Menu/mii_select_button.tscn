@@ -2,21 +2,21 @@
 
 [ext_resource path="res://Scenes/Singletons/Tooltips/tooltip_node.gd" type="Script" id=2]
 [ext_resource path="res://mods/Timimimi.Mii/Assets/Material/CmnLightenMat.material" type="Material" id=3]
-[ext_resource path="res://Assets/Textures/UI/badges8.png" type="Texture" id=4]
-[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatCmn.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Textures/UI/badges8.png" type="Texture2D" id=4]
+[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatCmn.png" type="Texture2D" id=5]
 [ext_resource path="res://mods/Timimimi.Mii/Assets/Node/Menu/MiiSelectButton.gd" type="Script" id=6]
 [ext_resource path="res://Assets/world_env.tres" type="Environment" id=7]
-[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatCmn2.png" type="Texture" id=8]
+[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatCmn2.png" type="Texture2D" id=8]
 
 [sub_resource type="ViewportTexture" id=1]
-viewport_path = NodePath("Viewport")
+viewport_path = NodePath("SubViewport")
 
 [node name="mii_select_button" type="Control"]
 anchor_right = 0.071
 anchor_bottom = 0.121
-margin_right = -0.320007
-margin_bottom = 0.319992
-rect_min_size = Vector2( 136, 131 )
+offset_right = -0.320007
+offset_bottom = 0.319992
+custom_minimum_size = Vector2( 136, 131 )
 mouse_filter = 2
 script = ExtResource( 6 )
 butType = "mii"
@@ -27,15 +27,15 @@ visible = false
 modulate = Color( 1, 1, 1, 0.294118 )
 anchor_right = 1.035
 anchor_bottom = 1.0
-margin_top = 4.0
-margin_right = -4.75999
-margin_bottom = 65.0
+offset_top = 4.0
+offset_right = -4.75999
+offset_bottom = 65.0
 mouse_filter = 2
 texture = ExtResource( 4 )
 
 [node name="TextureButton" type="TextureButton" parent="."]
 anchor_right = 1.0
-margin_bottom = 124.0
+offset_bottom = 124.0
 texture_normal = ExtResource( 8 )
 
 [node name="TextureRect" type="TextureRect" parent="TextureButton"]
@@ -43,18 +43,18 @@ modulate = Color( 1, 1, 1, 0.588235 )
 material = ExtResource( 3 )
 anchor_right = 1.035
 anchor_bottom = 1.0
-margin_top = -3.0
-margin_right = -4.75999
-margin_bottom = -3.0
-rect_pivot_offset = Vector2( 65, 0 )
+offset_top = -3.0
+offset_right = -4.75999
+offset_bottom = -3.0
+pivot_offset = Vector2( 65, 0 )
 mouse_filter = 2
 texture = ExtResource( 5 )
 
 [node name="TextureRect2" type="TextureRect" parent="TextureButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -3.0
-margin_bottom = -3.0
+offset_top = -3.0
+offset_bottom = -3.0
 mouse_filter = 2
 texture = SubResource( 1 )
 expand = true
@@ -64,23 +64,23 @@ flip_v = true
 [node name="TooltipNode" type="Control" parent="TextureButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -136.0
-margin_bottom = -124.0
+offset_right = -136.0
+offset_bottom = -124.0
 script = ExtResource( 2 )
 header = "test"
 body = "test"
 
-[node name="Viewport" type="Viewport" parent="."]
+[node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2( 100, 100 )
 own_world = true
 transparent_bg = true
 
-[node name="iconCam" type="Camera" parent="Viewport"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.635, 1.501 )
+[node name="iconCam" type="Camera3D" parent="SubViewport"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.635, 1.501 )
 projection = 1
 size = 1.42732
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Viewport"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewport"]
 environment = ExtResource( 7 )
 
 [connection signal="button_down" from="TextureButton" to="." method="_on_TextureButton_button_down"]

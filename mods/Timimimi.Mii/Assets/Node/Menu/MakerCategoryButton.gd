@@ -1,16 +1,16 @@
 extends Control
 
-export  var tab_num = 0
-export  var y_offset = 10
-export  var x_offset = 0
-export (Texture) var image
-export  var header = ""
-export  var desc = ""
-export var butType = "cat"
+@export  var tab_num = 0
+@export  var y_offset = 10
+@export  var x_offset = 0
+@export var image: Texture2D
+@export  var header = ""
+@export  var desc = ""
+@export var butType = "cat"
 var hovered = false
 var highlighted = false
-export var feat = "Head"
-onready var shadow = $shadow
+@export var feat = "Head"
+@onready var shadow = $shadow
 var extra_x
 var extra_y
 signal _pressed
@@ -36,12 +36,12 @@ func _process(delta):
 	elif butType == "pos":
 		extra_y = 0 if not highlighted else - 8
 		extra_x=0
-	$TextureButton.rect_position.y = lerp($TextureButton.rect_position.y, y_offset + extra_y, 0.2)
-	$TextureButton.rect_position.x = lerp($TextureButton.rect_position.x, x_offset + extra_x, 0.2)
-	$TextureButton/TextureRect.rect_position.y = - 3
+	$TextureButton.position.y = lerp(float($TextureButton.position.y), float(y_offset) + float(extra_y), 0.2)
+	$TextureButton.position.x = lerp(float($TextureButton.position.x), float(x_offset) + float(extra_x), 0.2)
+	$TextureButton/TextureRect.position.y = -3.0
 	
-	$TextureButton.margin_bottom = 61 + y_offset + extra_y
-	$TextureButton.margin_top = 0 + y_offset + extra_y
+	$TextureButton.offset_bottom = 61 + y_offset + extra_y
+	$TextureButton.offset_top = 0 + y_offset + extra_y
 
 func _update(current_slot):
 	if butType != "pos":
@@ -49,10 +49,10 @@ func _update(current_slot):
 	else:
 		highlighted = false
 	$TextureButton/TextureRect.visible = highlighted
-	$TextureButton / TooltipNode.header = header
-	$TextureButton / TooltipNode.body = desc
+#	$TextureButton / TooltipNode.header = header
+#	$TextureButton / TooltipNode.body = desc
 	$TextureButton/TextureRect2.texture = image
-	$shadow.rect_position.y = y_offset + 4
+	$shadow.position.y = y_offset + 4
 
 func _on_TextureButton_pressed():
 	#print("pressed")

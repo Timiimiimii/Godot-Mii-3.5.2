@@ -3,18 +3,18 @@
 [ext_resource path="res://mods/Timimimi.Mii/Assets/Node/Menu/MakerCategoryButton.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Singletons/Tooltips/tooltip_node.gd" type="Script" id=2]
 [ext_resource path="res://mods/Timimimi.Mii/Assets/Material/CmnLightenMat.material" type="Material" id=3]
-[ext_resource path="res://Assets/Textures/UI/badges8.png" type="Texture" id=4]
-[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatCmn.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Textures/UI/badges8.png" type="Texture2D" id=4]
+[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatCmn.png" type="Texture2D" id=5]
 [ext_resource path="res://mods/Timimimi.Mii/Assets/Material/Mii_CanvasRGB_Swap.material" type="Material" id=6]
-[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/Maker/Icon/IconFaceline00.png" type="Texture" id=7]
-[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatCmn2.png" type="Texture" id=8]
+[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/Maker/Icon/IconFaceline00.png" type="Texture2D" id=7]
+[ext_resource path="res://mods/Timimimi.Mii/Assets/Tex/MakerCatCmn2.png" type="Texture2D" id=8]
 
 [node name="maker_feat_button" type="Control"]
 anchor_right = 0.071
 anchor_bottom = 0.121
-margin_right = -0.320007
-margin_bottom = 0.319992
-rect_min_size = Vector2( 136, 131 )
+offset_right = -0.320007
+offset_bottom = 0.319992
+custom_minimum_size = Vector2( 136, 131 )
 mouse_filter = 2
 script = ExtResource( 1 )
 butType = "feat"
@@ -24,15 +24,15 @@ visible = false
 modulate = Color( 1, 1, 1, 0.294118 )
 anchor_right = 1.035
 anchor_bottom = 1.0
-margin_top = 4.0
-margin_right = -4.75999
-margin_bottom = 65.0
+offset_top = 4.0
+offset_right = -4.75999
+offset_bottom = 65.0
 mouse_filter = 2
 texture = ExtResource( 4 )
 
 [node name="TextureButton" type="TextureButton" parent="."]
 anchor_right = 1.0
-margin_bottom = 124.0
+offset_bottom = 124.0
 texture_normal = ExtResource( 8 )
 
 [node name="TextureRect" type="TextureRect" parent="TextureButton"]
@@ -40,10 +40,10 @@ modulate = Color( 1, 1, 1, 0.588235 )
 material = ExtResource( 3 )
 anchor_right = 1.035
 anchor_bottom = 1.0
-margin_top = -3.0
-margin_right = -4.75999
-margin_bottom = -3.0
-rect_pivot_offset = Vector2( 65, 0 )
+offset_top = -3.0
+offset_right = -4.75999
+offset_bottom = -3.0
+pivot_offset = Vector2( 65, 0 )
 mouse_filter = 2
 texture = ExtResource( 5 )
 
@@ -51,8 +51,8 @@ texture = ExtResource( 5 )
 material = ExtResource( 6 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -3.0
-margin_bottom = -3.0
+offset_top = -3.0
+offset_bottom = -3.0
 mouse_filter = 2
 texture = ExtResource( 7 )
 expand = true
@@ -61,8 +61,8 @@ stretch_mode = 7
 [node name="TooltipNode" type="Control" parent="TextureButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -136.0
-margin_bottom = -124.0
+offset_right = -136.0
+offset_bottom = -124.0
 script = ExtResource( 2 )
 header = "test"
 body = "test"
