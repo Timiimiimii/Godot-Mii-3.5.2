@@ -8,6 +8,8 @@
 
 # DISCLAIMER
 There are very minor amounts of WEBFISHING code inside, as these scenes were originally from a mod in WEBFISHING. I am working to remove all WEBFISHING related assets. Additionally, please use mii_head_plus.tscn. It is the most accurate I have gotten so far.
+
+PLEASE GIVE CREDIT IF THIS PROJECT IS USED AND/OR EDITED!! The code that brings together the Mii head is ORIGINAL and NOT by Nintendo.
 # Loading Miis
 In the Godot 3.5.2 version, only .CHARINFO loading is supported. Mii Names also are not supported as of now. To load a Mii, use the function MiiFileLoad() on the Mii Head with the file path to the Mii.
 # Making the face move
